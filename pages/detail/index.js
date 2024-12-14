@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { MapPin, Star, Plus } from "lucide-react";
@@ -8,51 +9,49 @@ import { Badge } from "@/components/ui/badge";
 import AddReviewForm from "@/components/addReview";
 import PropertyContactForm from "@/components/PropertyContactForm";
 import { useEffect, useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { useSession } from "next-auth/react";
 
 export default function PropertyDetail() {
   const property = useSelector((state) => state.counter.property); // Access property data from Redux
   const [imagedisplay, setImageDisplay] = useState();
-  const { data: session , status} = useSession();
-  const [reviews,setReviews] = useState([])
+  const { data: session, status } = useSession();
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     setImageDisplay(property.imgpath[0]);
-    if(property.review?.length !== 0){
-      setReviews(property.reviews)
+    if (property.review?.length !== 0) {
+      setReviews(property.reviews);
     }
-   
   }, []);
 
-  const Reviewadd = async (rating,comment)=>{
+  const Reviewadd = async (rating, comment) => {
     if (status === "unauthenticated") {
       router.push("/");
     }
 
-    
     const email = session.user.email;
     const review = {
-      email ,
+      email,
       rating,
-      comment
-    }
-    if(reviews){
-      const arr = [...reviews]
-      arr.push(review)
+      comment,
+    };
+    if (reviews) {
+      const arr = [...reviews];
+      arr.push(review);
       setReviews(arr);
-    }else{
-      setReviews([review] );
+    } else {
+      setReviews([review]);
     }
 
-    console.log(reviews)
-    
+    console.log(reviews);
+
     let response = await axios.patch(
       `https://are-z-pak-default-rtdb.asia-southeast1.firebasedatabase.app/property/${property.id}.json`,
-       {reviews}
+      { reviews }
     );
-    console.log(response.data)
-  }
+    console.log(response.data);
+  };
 
   if (!property) {
     return <div>Loading property details...</div>; // Display loading message if property data is not yet available
@@ -77,7 +76,7 @@ export default function PropertyDetail() {
             />
           </div>
           <div className="absolute right-4 bottom-4 z-10 flex items-center gap-2 rounded bg-black/50 px-3 py-1 text-white">
-            {property.imgpath.map((imagePath, index) => (
+            {property.imgpath?.map((imagePath, index) => (
               <Image
                 key={index}
                 src={imagePath}
@@ -112,7 +111,7 @@ export default function PropertyDetail() {
                 alt={property.agent?.name || "Agent"}
               />
               <AvatarFallback>
-                {property.userEmail.charAt(0) || "A"}
+                {property.userEmail?.charAt(0) || "A"}
               </AvatarFallback>
             </Avatar>
             <div>
@@ -146,7 +145,7 @@ export default function PropertyDetail() {
               </div>
             </div>
             <div className="flex gap-4">
-              {property.facilities.map((value) => {
+              {property.facilities?.map((value) => {
                 return (
                   <Badge key={value} variant="secondary" className="px-4 py-2">
                     {value}
@@ -156,12 +155,16 @@ export default function PropertyDetail() {
             </div>
           </div>
           <div className="flex gap-4">
-            {Object.entries(property.features).map(([key, value], index) => (
-              <Badge key={index} variant="secondary" className="px-4 py-2">
-                {value} {key.charAt(0).toUpperCase() + key.slice(1)}{" "}
-                {/* Capitalize the key */}
-              </Badge>
-            ))}
+            {property?.features && Object.keys(property.features).length > 0 ? (
+              Object.entries(property.features).map(([key, value], index) => (
+                <Badge key={index} variant="secondary" className="px-4 py-2">
+                  {value ? value : "Unknown"}{" "}
+                  {key ? key.charAt(0).toUpperCase() + key.slice(1) : "Unknown"}
+                </Badge>
+              ))
+            ) : (
+              <div>No features available</div>
+            )}
           </div>
 
           {/* Reviews */}
