@@ -58,15 +58,18 @@ export default function PropertyDetail() {
   }
 
   return (
-    <div className="container mx-10 px-4 py-8">
+    <div className="container overflow-hidden justify-center mx-0 sm:mx-10  px-4 sm:py-8">
       {/* Hero Section */}
-      <div className="flex  mb-8 w-11/12">
-        <div className="relative  w-full overflow-hidden rounded-xl">
+      <div className="flex flex-col md:flex-row mb-8 w-full md:w-11/12 mx-auto">
+        {/* Image Container */}
+        <div className="relative w-full md:w-2/3 overflow-hidden rounded-xl">
+          {/* Rating Badge */}
           <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full bg-black/50 px-3 py-1 text-white">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span>{property.rating || "N/A"}</span>
           </div>
-          <div>
+          {/* Main Image */}
+          <div className="relative w-full h-64 sm:h-96 md:h-full">
             <Image
               src={imagedisplay || "/placeholder.svg"}
               alt={property.name}
@@ -75,19 +78,25 @@ export default function PropertyDetail() {
               priority
             />
           </div>
-          <div className="absolute right-4 bottom-4 z-10 flex items-center gap-2 rounded bg-black/50 px-3 py-1 text-white">
+          {/* Thumbnail Images */}
+          <div className="absolute right-4 bottom-4 z-10 flex flex-wrap gap-2">
             {property.imgpath?.map((imagePath, index) => (
               <Image
                 key={index}
                 src={imagePath}
                 alt={`Image ${index + 1}`}
-                width={20} // Adjust width as needed
-                height={25} // Adjust height as needed
+                width={40} // Thumbnail width
+                height={40} // Thumbnail height
+                className="rounded-lg"
               />
             ))}
           </div>
         </div>
-        <PropertyContactForm></PropertyContactForm>
+
+        {/* Property Contact Form */}
+        <div className="w-full md:w-1/3 mt-6 md:mt-0 md:ml-6 flex-shrink-0">
+          <PropertyContactForm />
+        </div>
       </div>
 
       {/* Property Info */}
@@ -104,7 +113,7 @@ export default function PropertyDetail() {
           </div>
 
           {/* Agent Info */}
-          <div className="flex items-around gap-4">
+          <div className="flex flex-col md:flex-row items-around gap-4">
             <Avatar className="h-12 w-12">
               <AvatarImage
                 src={property.agent?.avatar || "/placeholder.svg"}
@@ -122,7 +131,7 @@ export default function PropertyDetail() {
                 {property.agent?.role || "Real Estate Agent"}
               </div>
             </div>
-            <div className="ml-auto flex gap-2">
+            <div className="md:ml-auto flex gap-2">
               {property.listingType === "sell" ? (
                 <Button variant="outline">Property for selling</Button>
               ) : (

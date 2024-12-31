@@ -58,10 +58,10 @@ export default function Layout(props) {
   }, [session]);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex h-16 items-center justify-around px-4 lg:px-8">
-        <div onClick={()=>{event.preventDefault() , route.push('/')}} className="flex cursor-pointer items-center space-x-4">
-          <Image alt="logo" width={100} height={100} src={"/logo2.png"}></Image>
+    <div className="flex min-h-screen flex-col ">
+      <header className="flex flex-col md:flex-row h-56 sm:h-16 items-center justify-around  space-y-2 sm:space-y-0 px-4 lg:px-8">
+        <div onClick={()=>{event.preventDefault() , route.push('/')}} className="flex cursor-pointer items-center ">
+          <Image alt="logo" width={80} height={100} src={"/logo2.png"}></Image>
           <h1 className="text-4xl text-green-600">-e-pak</h1>
         </div>
 
