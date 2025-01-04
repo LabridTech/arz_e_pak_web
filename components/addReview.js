@@ -16,9 +16,7 @@ const AddReviewForm = (props) => {
     }
 
     props.AddReview(parseInt(rating, 5),comment )
-
-
-
+    
     // Clear the form
     setRating(0);
     setComment("");
