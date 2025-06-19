@@ -3,6 +3,9 @@
 import * as React from "react"
 import { Phone, Mail } from 'lucide-react'
 import { useForm } from "react-hook-form"
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -18,20 +21,26 @@ import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 
-
-
 export default function PropertyContactForm() {
   const form = useForm({
     defaultValues: {
       message: "I would like to inquire about your property Zameen - ID51778652. Please contact me at your earliest convenience.",
       userType: "buyer",
       keepInformed: false,
+      phone: '',
     },
   })
+  const [loading, setLoading] = React.useState(false);
 
   async function onSubmit(data) {
-    // Handle form submission
-    console.log(data)
+    setLoading(true);
+    try {
+      // Handle form submission
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network
+      console.log(data)
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -98,21 +107,17 @@ export default function PropertyContactForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex">
-                    <div className="flex items-center gap-1 rounded-l-md border border-r-0 bg-gray-50 px-3">
-                      <img
-                        src="/placeholder.svg"
-                        alt="Pakistan flag"
-                        className="h-4 w-6"
-                      />
-                      <span className="text-sm">+92</span>
-                    </div>
-                    <Input
-                      placeholder="PHONE*"
-                      className="rounded-l-none"
-                      {...field}
-                    />
-                  </div>
+                  <PhoneInput
+                    country={'pk'}
+                    value={field.value}
+                    onChange={field.onChange}
+                    inputProps={{
+                      name: 'phone',
+                      required: true,
+                      autoFocus: false
+                    }}
+                    inputStyle={{ width: '100%' }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -187,9 +192,9 @@ export default function PropertyContactForm() {
             )}
           />
 
-          <Button type="submit" className="w-full gap-2">
-            <Mail className="h-5 w-5" />
-            SEND EMAIL
+          <Button type="submit" className="w-full flex items-center gap-2 bg-green-600 hover:bg-green-700" disabled={loading}>
+            {loading ? <CircularProgress size={20} color="inherit" /> : <Mail className="h-5 w-5" />}
+            {loading ? 'Sending...' : 'SEND EMAIL'}
           </Button>
         </form>
       </Form>

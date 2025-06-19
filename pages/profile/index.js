@@ -12,6 +12,17 @@ import axios from "axios";
 import { setproperty, clearproperty } from "@/redux/counterSlice";
 import CircularProgress from '@mui/material/CircularProgress';
 
+function formatPKR(amount) {
+  if (amount >= 10000000) {
+    return (amount / 10000000).toFixed(2).replace(/\.00$/, "") + " crore";
+  } else if (amount >= 100000) {
+    return (amount / 100000).toFixed(2).replace(/\.00$/, "") + " lac";
+  } else if (amount >= 1000) {
+    return (amount / 1000).toFixed(2).replace(/\.00$/, "") + " thousand";
+  }
+  return amount;
+}
+
 export default function AgentProfile() {
   const { data: session, status } = useSession(); // Get the session and its status
   const [userData, setUserData] = useState(null); // Store user info
@@ -211,7 +222,7 @@ const deleteProperty = async (propertyId) => {
                         <DeleteIcon  className="h-4 w-4" />
                       </Button>
                       <div className="absolute bottom-2 left-2 rounded bg-white/80 px-2 py-1 text-sm font-semibold">
-                        $ {property.price}
+                        {formatPKR(property.price)}
                       </div>
                     </div>
                     <div className="p-4 flex justify-between">
@@ -280,7 +291,7 @@ const deleteProperty = async (propertyId) => {
                         <Bookmark className="h-4 w-4" />
                       </Button>
                       <div className="absolute bottom-2 left-2 rounded bg-white/80 px-2 py-1 text-sm font-semibold">
-                        $ {property.price}
+                        {formatPKR(property.price)}
                       </div>
                     </div>
                     <div className="p-4">

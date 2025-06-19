@@ -1,5 +1,5 @@
 import { signOut } from "next-auth/react";
-import { FiLogOut } from "react-icons/fi"; // Import logout icon
+import { LogOut } from "lucide-react";
 
 const LogoutButton = () => {
 
@@ -12,9 +12,9 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all"
+      className="flex items-center space-x-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-all duration-200 font-medium text-sm"
     >
-      <FiLogOut size={20} /> {/* Icon for logout */}
+      <LogOut size={16} />
       <span>Logout</span>
     </button>
   );

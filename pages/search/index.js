@@ -14,6 +14,17 @@ import { useDispatch } from "react-redux";
 import { setproperty, clearproperty } from "@/redux/counterSlice";
 import { useRouter } from "next/router";
 
+function formatPKR(amount) {
+  if (amount >= 10000000) {
+    return (amount / 10000000).toFixed(2).replace(/\.00$/, "") + " crore";
+  } else if (amount >= 100000) {
+    return (amount / 100000).toFixed(2).replace(/\.00$/, "") + " lac";
+  } else if (amount >= 1000) {
+    return (amount / 1000).toFixed(2).replace(/\.00$/, "") + " thousand";
+  }
+  return amount;
+}
+
 export default function PropertyListings({ propertiesData }) {
   const router = useRouter();
   const propertype = router.query.propertyType;
@@ -176,8 +187,8 @@ export default function PropertyListings({ propertiesData }) {
                 />
               </div>
               <div className="flex justify-between text-sm">
-                <span>${priceRange[0].toLocaleString()}</span>
-                <span>${priceRange[1].toLocaleString()}</span>
+                <span>{formatPKR(priceRange[0])}</span>
+                <span>{formatPKR(priceRange[1])}</span>
               </div>
             </div>
 

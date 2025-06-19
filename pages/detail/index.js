@@ -12,6 +12,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
+function formatPKR(amount) {
+  if (amount >= 10000000) {
+    return (amount / 10000000).toFixed(2).replace(/\.00$/, "") + " crore";
+  } else if (amount >= 100000) {
+    return (amount / 100000).toFixed(2).replace(/\.00$/, "") + " lac";
+  } else if (amount >= 1000) {
+    return (amount / 1000).toFixed(2).replace(/\.00$/, "") + " thousand";
+  }
+  return amount;
+}
+
 export default function PropertyDetail() {
   const property = useSelector((state) => state.counter.property); // Access property data from Redux
   const [imagedisplay, setImageDisplay] = useState();
@@ -109,7 +120,7 @@ export default function PropertyDetail() {
               <MapPin className="h-4 w-4" />
               <span>{property.location}</span>
             </div>
-            <div className="mt-4 text-2xl font-bold">$ {property.price}</div>
+            <div className="mt-4 text-2xl font-bold">PKR {formatPKR(property.price)}</div>
           </div>
 
           {/* Agent Info */}
@@ -250,7 +261,7 @@ export default function PropertyDetail() {
                       <div className="p-4">
                         <h3 className="font-semibold">{property.title}</h3>
                         <div className="mt-2 flex items-center justify-between">
-                          <div className="font-bold">${property.price}</div>
+                          <div className="font-bold">PKR {formatPKR(property.price)}</div>
                           <div className="flex items-center gap-1">
                             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                             <span className="text-sm">{property.rating}</span>
