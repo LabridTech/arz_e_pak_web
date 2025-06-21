@@ -35,9 +35,9 @@ export default function PropertyContactForm() {
   async function onSubmit(data) {
     setLoading(true);
     try {
-      // Handle form submission
+    // Handle form submission
       await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network
-      console.log(data)
+    console.log(data)
     } finally {
       setLoading(false);
     }
@@ -117,7 +117,7 @@ export default function PropertyContactForm() {
                       autoFocus: false
                     }}
                     inputStyle={{ width: '100%' }}
-                  />
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>

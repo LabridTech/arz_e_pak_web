@@ -61,7 +61,7 @@ export default function Layout(props) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <header className="sticky top-0 z-50 w-full border-b bg-green-50">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-8">
           <div onClick={()=>{event.preventDefault() , route.push('/')}} className="flex cursor-pointer items-center space-x-2">
             <Image alt="logo" width={50} height={50} src={"/logo2.png"} className="rounded-lg" />
@@ -71,25 +71,25 @@ export default function Layout(props) {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
-              className={`text-sm font-medium transition-colors ${route.pathname === '/' ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+              className={`text-sm font-medium transition-colors ${route.pathname === '/' ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-700 hover:text-green-600'} pb-1`}
               href="/"
             >
               Home
             </Link>
             <Link 
-              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=House') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=House') ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-700 hover:text-green-600'} pb-1`}
               href="/search?propertyType=House"
             >
               Houses
             </Link>
             <Link 
-              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Plot') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Plot') ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-700 hover:text-green-600'} pb-1`}
               href="/search?propertyType=Plot"
             >
               Plots
             </Link>
             <Link 
-              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Apartment') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+              className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Apartment') ? 'text-green-600 border-b-2 border-green-600' : 'text-gray-700 hover:text-green-600'} pb-1`}
               href="/search?propertyType=Apartment"
             >
               Apartments
@@ -98,10 +98,12 @@ export default function Layout(props) {
 
           {/* Desktop User Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline">
-              <MapPin className="mr-2 h-4 w-4" />
-              {address ? address : "Select Location"}
-            </Button>
+            <div className="bg-white rounded-md shadow-sm px-2 py-1">
+              <Button variant="outline" className="bg-white">
+                <MapPin className="mr-2 h-4 w-4" />
+                {address ? address : "Select Location"}
+              </Button>
+            </div>
             <Avatar className="cursor-pointer h-8 w-8" onClick={changeLink}>
               <AvatarImage alt="User" src="/placeholder-user.jpg" />
               <AvatarFallback className="bg-green-100 text-green-600">{user ? user[0] : "N"}</AvatarFallback>
@@ -124,28 +126,28 @@ export default function Layout(props) {
             <div className="px-4 py-6 space-y-4">
               <nav className="flex flex-col space-y-4">
                 <Link 
-                  className={`text-sm font-medium transition-colors ${route.pathname === '/' ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+                  className={`text-sm font-medium transition-colors ${route.pathname === '/' ? 'text-green-600 border-l-4 border-green-600' : 'text-gray-700 hover:text-green-600'} pl-2`}
                   href="/"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Home
                 </Link>
                 <Link 
-                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=House') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=House') ? 'text-green-600 border-l-4 border-green-600' : 'text-gray-700 hover:text-green-600'} pl-2`}
                   href="/search?propertyType=House"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Houses
                 </Link>
                 <Link 
-                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Plot') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Plot') ? 'text-green-600 border-l-4 border-green-600' : 'text-gray-700 hover:text-green-600'} pl-2`}
                   href="/search?propertyType=Plot"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Plots
                 </Link>
                 <Link 
-                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Apartment') ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`}
+                  className={`text-sm font-medium transition-colors ${route.asPath.startsWith('/search?propertyType=Apartment') ? 'text-green-600 border-l-4 border-green-600' : 'text-gray-700 hover:text-green-600'} pl-2`}
                   href="/search?propertyType=Apartment"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -172,9 +174,9 @@ export default function Layout(props) {
 
       {props.children}
 
-      <footer className="border-t bg-gray-50">
+      <footer className="border-t bg-green-100">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 rounded-lg p-8">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">About Arz-e-Pak</h3>
               <p className="text-sm text-gray-600 mb-4">
@@ -264,15 +266,15 @@ export default function Layout(props) {
           </div>
           
           <div className="mt-12 border-t pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm text-gray-600">
+            <div className="flex flex-col md:flex-row justify-between items-center bg-green-600 w-full rounded-lg py-4 px-4">
+              <p className="text-sm text-white">
                 © 2024 Arz-e-Pak. All Rights Reserved.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
-                <Link className="text-sm text-gray-600 hover:text-green-600" href="/privacy">
+                <Link className="text-sm text-white hover:text-green-200" href="/privacy">
                   Privacy Policy
                 </Link>
-                <Link className="text-sm text-gray-600 hover:text-green-600" href="/terms">
+                <Link className="text-sm text-white hover:text-green-200" href="/terms">
                   Terms of Service
                 </Link>
               </div>
